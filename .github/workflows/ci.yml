@@ -1,0 +1,30 @@
+name: Windows offline checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - name: Install test dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Offline core tests
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          PYTHONIOENCODING: utf-8
+        run: python -m unittest discover -s . -p "test_*.py"
+      - name: Simulated uninstall checks
+        shell: powershell
+        run: .\test_uninstall.ps1
+      - name: Rebuild allowlisted archives
+        run: python tools\build_release.py
+      - name: Verify install payload without installing
+        shell: powershell
+        run: .\install.ps1 -VerifyOnly

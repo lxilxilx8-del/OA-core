@@ -1,0 +1,2 @@
+# Preserve exact bytes: install manifests hash script BOMs and line endings.
+* -text

@@ -1,0 +1,194 @@
+{
+  "product": "XiaoA Core",
+  "version": "1.1.0",
+  "files": [
+    {
+      "path": "app/core_runtime.py",
+      "sha256": "cebacc2c3e69790d71dd791b585589b234b1741034a5b135afc2350ab3e06669"
+    },
+    {
+      "path": "app/assistant_hub.py",
+      "sha256": "9bcca45b0bbd1778a37c410be9b5367cbcba4e40ca2d84114802efaaf5357174"
+    },
+    {
+      "path": "app/attachment_io.py",
+      "sha256": "562c64de68c406ba59dc6cb0ae8ef052d58f8dd280d8b2eab8f801140edc56c5"
+    },
+    {
+      "path": "app/document_library.py",
+      "sha256": "07e9163eba7d86d4bd93d633e8d61e5b1049a452a3070993232cefedbd477ee9"
+    },
+    {
+      "path": "app/topic_watch.py",
+      "sha256": "ec118a19538dfc80154596ae4572fcae240f5614db3cf5ca1eb300a05b067aa4"
+    },
+    {
+      "path": "app/weixin_delivery.py",
+      "sha256": "dc5b4dbdcd1238d29a5f1dcbdc2325142462509716508a959fd54aa57a1347b4"
+    },
+    {
+      "path": "app/web_search.py",
+      "sha256": "bef59a1ed1e7402d8a47de051702b344bd7009aff08a3a62b9cc5529b164f290"
+    },
+    {
+      "path": "app/conversation_engine.py",
+      "sha256": "d80a63324ab08c5aaf19e20e67a0375e9709fad6066bbd31c95b81946bcc35bc"
+    },
+    {
+      "path": "app/clawbot_plugins.py",
+      "sha256": "48464bfda06f6de7662d3cb002429a86abd202f5ba182ed5ff477f57b80e8e51"
+    },
+    {
+      "path": "app/clawbot_service.py",
+      "sha256": "dc17a28857f2a9ad0ba1a0f40bae47bb4c1b4f7e963db6de973dc42d74395dce"
+    },
+    {
+      "path": "app/conversation_store.py",
+      "sha256": "5736de7d4c0c4ffbbcddf2e9c2bfa359fe7370d69a8c04d7cbbbe272ed44f349"
+    },
+    {
+      "path": "app/message_dedup.py",
+      "sha256": "c177236df82162dab53019404a656da48f61be7a8631d768be1277af6e810bc0"
+    },
+    {
+      "path": "app/THIRD_PARTY_WECHATBRIDGE_LICENSE.txt",
+      "sha256": "1f2d37abaf522324c1fb662def07c79191017b0214521879c2c943d3d1bdf2a2"
+    },
+    {
+      "path": "app/xiaoa_proactive/__init__.py",
+      "sha256": "f54292cac99ce807bf8389cb6519a13cb213e1c32fa246fe404f67c3e1803fc7"
+    },
+    {
+      "path": "app/xiaoa_proactive/engine.py",
+      "sha256": "ab5bb9f77c325c9942953cb63e0e3795434a5a5a30960e612810f0835747c1e5"
+    },
+    {
+      "path": "app/xiaoa_proactive/policy.py",
+      "sha256": "bef219826cc736583052e458ba0042a0d70ff3b0bfd41c610348b6665481c2f5"
+    },
+    {
+      "path": "app/xiaoa_proactive/LICENSE",
+      "sha256": "e0eedba615d5cd1b986afb6c5b3a4b1ae33713e7e9dc74d19daec5e3221f9d2e"
+    },
+    {
+      "path": "app/xiaoa_proactive/NOTICE.md",
+      "sha256": "83bf6ea896597235efb3e996a7590b41e46a7ac70ba57cb8488210b03e51d115"
+    },
+    {
+      "path": "install.ps1",
+      "sha256": "b7778cd2a7b9dd66ef1b8c01a3414368021b2a5f9b8bb20146716626a4d14253"
+    },
+    {
+      "path": "manage.ps1",
+      "sha256": "2cd49ad4075ed83d114cfe38a1548c82b586ac7abdf3b377fc8c81ea0d722ed9"
+    },
+    {
+      "path": "uninstall.ps1",
+      "sha256": "620cd16b07718dc5a17889b36744df61e93b6b7ac393e6c9a2fd0c4cd123cc0b"
+    },
+    {
+      "path": "start.vbs",
+      "sha256": "cd4a75c6984b5f2684f80bbdd360c5b5c0d433ca950191402f03027d892fbc44"
+    },
+    {
+      "path": "一键安装小A.cmd",
+      "sha256": "a56dfa0cf18d95366323befb04f0bec6764ca0ff67c5a0f29dbe128367ae7700"
+    },
+    {
+      "path": "卸载小A.cmd",
+      "sha256": "953dc393ab8567c484946105f87cffe6524c5f8df10c0f4911ab0cac9d822cb4"
+    },
+    {
+      "path": "停止小A.cmd",
+      "sha256": "8308bb34ba5008e84a5019b034059c4f7e38ea36c8b5978a91535a4047cd1068"
+    },
+    {
+      "path": "打开数据目录.cmd",
+      "sha256": "78d422d97d0d5da64f2a77ca3827705e07a2d0689ff743027e5d327160036039"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "31e8d4ac9f3cafb8e3639241115c594ad5e3c86ee835eccae89d1b3d80b304c3"
+    },
+    {
+      "path": "使用说明.md",
+      "sha256": "53c0653734ca482b7033ac63213be429e477d79592f03c1b20278b607fc58ef9"
+    },
+    {
+      "path": "记忆升级说明.md",
+      "sha256": "375c4b19779087fb261e8ebfac62afae22a3190d76e71501496cd77d34a8ea76"
+    },
+    {
+      "path": "NOTICE.md",
+      "sha256": "4484d5bb1ad3d452384b1149ac0b77e0ffcb5a7d4fc56ebefcf0973cf4b6b1b5"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "e0eedba615d5cd1b986afb6c5b3a4b1ae33713e7e9dc74d19daec5e3221f9d2e"
+    },
+    {
+      "path": "test_release_core.py",
+      "sha256": "1dcb332e29a30ae9c1b086e59888b331b2045a1af41e8856cc16cdea9d1c9284"
+    },
+    {
+      "path": "test_core_runtime.py",
+      "sha256": "ee6afb733843c51f446d7f98a9b9b724fb8eba36e4484122b06caeb5ee58fc32"
+    },
+    {
+      "path": "test_memory_v2.py",
+      "sha256": "a987d352bf81ea1ab9cc27ba7ec6ee3236a53df8b9dafbb05133dc0ea3aaa340"
+    },
+    {
+      "path": "test_uninstall.ps1",
+      "sha256": "a97a45357f6ccdba0bd870c5d7a1d8e461b0caa78b1b7653dd7d245573c26aea"
+    },
+    {
+      "path": "test_packaging.py",
+      "sha256": "b83346029631ec46818bf0b60c6d65472eebf71419fb299868eb9cae988fa831"
+    },
+    {
+      "path": "README.md",
+      "sha256": "353f1f2c52ebb4d53c9b77a4ab33bcea59052225f5e9c1b3dff0d3d58a7ae306"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "1ea4046d00843de3945b7c5178c635334ec35ed2497cba238835a958d8aac040"
+    },
+    {
+      "path": "PRIVACY.md",
+      "sha256": "f9e191536cff65eec8cc2e3071b991bb2e578dff4011df790491f51edd7c6be2"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "ef878c3e813c5f3cebd7cfd43cc7c59f73f85061c6de784b95235b327bac81a7"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "e01793b345511c2be4f1d985b93a238e9a24b06c9be823e0c97117d8f2bf4719"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "7120fba22ba92e1a321ed879d73f4a0cc422bb9d54a1f4fb8bd2cf9dbca5c1d3"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "62ad59592e15439009936b98dc2de5c53d3e4d324bbe47814a61ab85a8ccb655"
+    },
+    {
+      "path": ".gitattributes",
+      "sha256": "64b30a0cfb1ac8ed03a5721de5a4ccf92238d7e5106ad7f2e2cce124b3188a20"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "42bd1dcb095a14c0298d3ef7b9cfbe1c6f0c4ca89f261524071a225b9d1a81ae"
+    },
+    {
+      "path": "tools/build_release.py",
+      "sha256": "86fa39ed9c2e1e85681349193d38ff3019588f64197b22e6c26042f19ea58148"
+    },
+    {
+      "path": "release-files.json",
+      "sha256": "1029d6f151da6e075b3a84d8379618d6065b989ed63e9ed4c28aac9d8cdd8a73"
+    }
+  ]
+}
