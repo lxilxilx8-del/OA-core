@@ -153,7 +153,8 @@ class ConversationStore:
         expression=' OR '.join('"'+token.replace('"','""')+'"' for token in tokens)
         with self.connect() as con:
             params=[expression,owner]
-            where='message_search MATCH ? AND m.owner=? AND m.recall_allowed=1 AND m.role=\'user\''
+            where="message_search MATCH ? AND m.owner=? AND m.recall_allowed=1 AND (m.role='user' OR (m.role='assistant' AND instr(m.content, ?) > 0))"
+            params.append('【本轮图片文字摘要（模型生成，仅作历史参考，非用户亲口陈述）】')
             if not all_epochs:
                 where+=' AND m.epoch=?';params.append(self._epoch(con,owner))
             if before_id is not None:where+=' AND m.id<?';params.append(before_id)

@@ -9,7 +9,7 @@ $manifestPath = Join-Path $sourceRoot 'manifest.json'
 
 function Assert-Payload {
     $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-    if ($manifest.version -ne '1.1.0' -or @($manifest.files).Count -lt 10) { throw '安装清单无效。' }
+    if ($manifest.version -ne '1.2.0' -or @($manifest.files).Count -lt 10) { throw '安装清单无效。' }
     foreach ($entry in $manifest.files) {
         $path = [IO.Path]::GetFullPath((Join-Path $sourceRoot $entry.path))
         if (-not $path.StartsWith($sourceRoot + [IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)) {
@@ -41,7 +41,7 @@ function Find-Python {
 }
 
 try {
-    Write-Host '小A 内核版 1.1.0 — 预览版安装向导' -ForegroundColor Cyan
+    Write-Host '小A 内核版 1.2.0 — 预览版安装向导' -ForegroundColor Cyan
     $manifest = Assert-Payload
     Write-Host '安装文件校验通过。'
     if ($VerifyOnly) { Write-Host 'VERIFY_OK'; exit 0 }
@@ -143,7 +143,7 @@ try {
     New-Item -Path $uninstallKey -Force | Out-Null
     $uninstallCommand = '"' + (Join-Path $env:WINDIR 'System32\WindowsPowerShell\v1.0\powershell.exe') +
                         '" -NoProfile -ExecutionPolicy Bypass -File "' + (Join-Path $appRoot 'uninstall.ps1') + '"'
-    foreach ($entry in @{DisplayName='小A内核版';DisplayVersion='1.1.0';InstallLocation=$appRoot;UninstallString=$uninstallCommand}.GetEnumerator()) {
+    foreach ($entry in @{DisplayName='小A内核版';DisplayVersion='1.2.0';InstallLocation=$appRoot;UninstallString=$uninstallCommand}.GetEnumerator()) {
         New-ItemProperty -LiteralPath $uninstallKey -Name $entry.Key -Value $entry.Value -PropertyType String -Force | Out-Null
     }
     New-ItemProperty -LiteralPath $uninstallKey -Name 'NoModify' -Value 1 -PropertyType DWord -Force | Out-Null

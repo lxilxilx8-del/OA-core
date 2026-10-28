@@ -113,6 +113,21 @@ def download_and_decrypt_wechat_image(m: dict) -> str:
                 continue
     return ""
 
+def download_and_decrypt_wechat_images(message: dict, errors=None) -> list:
+    """Download every image item in order; preserve successes and report failures."""
+    paths = []
+    number = 0
+    for item in message.get('item_list') or []:
+        if item.get('type') != 2:
+            continue
+        number += 1
+        path = download_and_decrypt_wechat_image({'item_list': [item]})
+        if path:
+            paths.append(path)
+        elif errors is not None:
+            errors.append(f'第{number}张图片未下载成功，请重新发送。')
+    return paths
+
 def fetch_qrcode_bytes(text_data):
     # Login URLs are encoded locally, never sent to a third-party QR service.
     import qrcode

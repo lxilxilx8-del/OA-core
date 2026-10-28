@@ -30,7 +30,7 @@ from assistant_hub import AssistantHub, Result
 from attachment_io import receive_files
 from weixin_delivery import (OUTPUT_BYTES, WeixinRejected, check_response, pace_send,
                              ensure_session_active, inspect_api_result, pause_remaining)
-from clawbot_plugins import (build_plugin_context, download_and_decrypt_wechat_image, fetch_qrcode_bytes)
+from clawbot_plugins import (build_plugin_context, download_and_decrypt_wechat_image, download_and_decrypt_wechat_images, fetch_qrcode_bytes)
 
 AGY_CALL_LOCK = threading.Lock()
 ASSISTANT_HUB_LOCK = threading.Lock()
@@ -412,9 +412,12 @@ def ask_ai_chat(base_url: str, bot_token: str, from_user: str, ctx_token: str, u
         return persona_ack
 
     history = load_history(user_text)
-    has_image = bool(inbound_img_path and os.path.isfile(inbound_img_path))
-    if inbound_img_path and not has_image:
-        return "这张图片的本地文件没有读到，请再发一次图片。"
+    image_paths = [inbound_img_path] if isinstance(inbound_img_path, (str, os.PathLike)) else (inbound_img_path or [])
+    image_paths = list(dict.fromkeys(os.fspath(path) for path in image_paths if path))
+    missing = [str(index) for index, path in enumerate(image_paths, 1) if not os.path.isfile(path)]
+    if missing:
+        return "第" + "、".join(missing) + "张图片的本地文件没有读到，请重新发送这些图片。"
+    has_image = bool(image_paths)
     # Immediately show typing indicator to user on WeChat
     send_typing(base_url, bot_token, from_user, context_token=ctx_token, status=1)
     # Read the image before resolving an ambiguous question into old search topics.
@@ -437,7 +440,12 @@ def ask_ai_chat(base_url: str, bot_token: str, from_user: str, ctx_token: str, u
 
     user_msg_content = user_text
     if has_image:
-        user_msg_content = f"{user_text}\n用户本轮提供的图片：\n@{inbound_img_path}"
+        from image_cache import IMAGE_NOTES_INSTRUCTIONS
+        prompt_sections.append(IMAGE_NOTES_INSTRUCTIONS)
+        references = "\n\n".join(f"第{index}张：\n@{path}" for index, path in enumerate(image_paths, 1))
+        user_msg_content = (f"{user_text}\n用户本轮共提供{len(image_paths)}张图片（按接收顺序编号）：\n{references}\n"
+                            "请逐张读取本轮全部图片，再结合问题回答。比较时说明对应编号；"
+                            "若某张无法读取，请明确指出，不得只看一张就声称看过全部。")
 
     tool_rule = (
         "2. 可以读取本次用户提供的图片以理解内容；不执行终端命令，不读取其他文件。搜索和定时任务交给外层程序。\n"
@@ -485,11 +493,16 @@ def ask_ai_chat(base_url: str, bot_token: str, from_user: str, ctx_token: str, u
             )
         if "<web_search>" in reply or "</web_search>" in reply:
             reply = "这条信息我暂时没能核实到，先不凭印象给你一个可能过时的答案。"
+        image_notes = []
+        if has_image:
+            from image_cache import parse_image_notes
+            reply, image_notes = parse_image_notes(reply, len(image_paths))
         reply, new_facts = parse_response(reply, user_text)
         if has_image:
             reply = re.sub(r'\[([^\]\n]*)\]\(file://[^)]+\)', r'\1', reply, flags=re.I)
             reply = re.sub(r'file://[^\s）)]+', '', reply, flags=re.I)
-            reply = reply.replace(inbound_img_path, '')
+            for path in image_paths:
+                reply = reply.replace(path, '')
         reply = filter_source_links(reply, citation_context)
         reply = normalize_reply(reply)
         if not reply:
@@ -498,7 +511,10 @@ def ask_ai_chat(base_url: str, bot_token: str, from_user: str, ctx_token: str, u
         elapsed = time.time() - t0
         log(f"[agy Gemini 3.8 Flash Medium] Successfully generated reply in {elapsed:.1f}s")
         history.append({"role": "user", "content": user_text, "timestamp": get_beijing_time_str()})
-        history.append({"role": "assistant", "content": reply, "timestamp": get_beijing_time_str()})
+        archived_reply = reply
+        if image_notes:
+            archived_reply += "\n\n【本轮图片文字摘要（模型生成，仅作历史参考，非用户亲口陈述）】\n" + "\n".join(image_notes)
+        history.append({"role": "assistant", "content": archived_reply, "timestamp": get_beijing_time_str()})
         save_history(history)
         for fact in new_facts:
             existing = load_user_memory(user_text)
@@ -568,13 +584,34 @@ def deliver_assistant_result(base_url, token, to_user, context_token, result=Non
         return True
     return hub.delivery(to_user, current=result, sender=sender)
 
+def maintain_image_cache():
+    """Hold the foreground lock so queued or active image tasks cannot be deleted."""
+    if not INBOX_LOCK.acquire(blocking=False):
+        return False
+    try:
+        with MERGE_LOCK:
+            if MERGE_STATES or AGY_CALL_LOCK.locked():
+                return False
+        from image_cache import cleanup_image_cache
+        report = cleanup_image_cache(BASE_DIR)
+        if report['deleted'] or report['failed']:
+            log(f"Inbound image cache cleanup: deleted={report['deleted']}, failed={report['failed']}; retention=8 days")
+        return True
+    finally:
+        INBOX_LOCK.release()
+
 def assistant_feature_watcher():
+    from image_cache import IMAGE_CLEANUP_INTERVAL
     last_maintenance = 0
+    last_image_cleanup = 0
     while True:
         try:
             if pause_remaining():
                 time.sleep(30)
                 continue
+            if time.monotonic() - last_image_cleanup >= IMAGE_CLEANUP_INTERVAL:
+                if maintain_image_cache():
+                    last_image_cleanup = time.monotonic()
             hub = get_assistant_hub()
             if not INBOX_LOCK.locked() and not AGY_CALL_LOCK.locked():
                 hub.background_tick()
@@ -613,7 +650,7 @@ def assistant_feature_watcher():
 def process_inbound_batch(state):
     base_url, bot_token, from_user, ctx_token = state['args']
     combined_text = "，".join(t for t in state['texts'] if t).strip()
-    handle_inbound_message(base_url, bot_token, from_user, ctx_token, combined_text, state['img'],
+    handle_inbound_message(base_url, bot_token, from_user, ctx_token, combined_text, state.get('images') or state.get('img', ''),
                            inbound_files=state['files'], file_errors=state['errors'])
     if state.get('dedup_keys'):
         get_conversation_store().mark_completed(state['dedup_keys'])
@@ -778,11 +815,13 @@ def worker_loop():
                     user_text = extract_msg_text(m)
                     hub = get_assistant_hub()
                     hub.note_interaction(from_user, ctx_token)  # Cancel a pending opener as soon as input arrives.
-                    inbound_img_path = download_and_decrypt_wechat_image(m)
+                    image_errors = []
+                    inbound_img_path = download_and_decrypt_wechat_images(m, errors=image_errors)
                     if hub.owner and from_user != hub.owner:
                         inbound_files, file_errors = [], (['文件助手仅向绑定用户开放。'] if any(i.get('type') == 4 for i in m.get('item_list', [])) else [])
                     else:
                         inbound_files, file_errors = receive_files(m, hub.inbox)
+                    file_errors.extend(image_errors)
                     last_user = from_user
                     last_ctx_token = ctx_token
 
@@ -909,7 +948,7 @@ def handle_inbound_message(base_url,bot_token,from_user,ctx_token,user_text,inbo
         deliver_assistant_result(base_url,bot_token,from_user,ctx_token,result)
         return
     if not user_text and inbound_img_path:
-        user_text='请结合这张图片的内容回复。'
+        user_text='请按顺序读取本轮全部图片，再结合内容回复。'
     reply=ask_ai_chat(base_url,bot_token,from_user,ctx_token,user_text,inbound_img_path)
     deliver_assistant_result(base_url,bot_token,from_user,ctx_token,Result(reply))
 

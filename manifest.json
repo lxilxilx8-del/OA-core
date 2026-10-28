@@ -1,10 +1,10 @@
 {
   "product": "XiaoA Core",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "files": [
     {
       "path": "app/core_runtime.py",
-      "sha256": "cebacc2c3e69790d71dd791b585589b234b1741034a5b135afc2350ab3e06669"
+      "sha256": "4e77d40c03fba7d1d4961245bcdfad843a4eef10f876b54052e30745559e4e46"
     },
     {
       "path": "app/assistant_hub.py",
@@ -36,19 +36,23 @@
     },
     {
       "path": "app/clawbot_plugins.py",
-      "sha256": "48464bfda06f6de7662d3cb002429a86abd202f5ba182ed5ff477f57b80e8e51"
+      "sha256": "f80563507556e301eb4c729947dca79594a3b3ee70dd049dc75164b39f000735"
     },
     {
       "path": "app/clawbot_service.py",
-      "sha256": "dc17a28857f2a9ad0ba1a0f40bae47bb4c1b4f7e963db6de973dc42d74395dce"
+      "sha256": "516b691caf633f55a192299485cc6f05bae60a47e1cb027d06dd08096e8516a2"
     },
     {
       "path": "app/conversation_store.py",
-      "sha256": "5736de7d4c0c4ffbbcddf2e9c2bfa359fe7370d69a8c04d7cbbbe272ed44f349"
+      "sha256": "eb393b564aa3b52050989e02e6a92ced57623115bc083490a108c753e5ce7e04"
     },
     {
       "path": "app/message_dedup.py",
       "sha256": "c177236df82162dab53019404a656da48f61be7a8631d768be1277af6e810bc0"
+    },
+    {
+      "path": "app/image_cache.py",
+      "sha256": "25fb07640a548b39ace95c3fc434bea4c978e8903ae1a12a716ee726fe40faf8"
     },
     {
       "path": "app/THIRD_PARTY_WECHATBRIDGE_LICENSE.txt",
@@ -76,7 +80,7 @@
     },
     {
       "path": "install.ps1",
-      "sha256": "1649d5a649e46aa8bdcbd2e8724f96133cc5fb190caceecd3178aa50b97bf2ab"
+      "sha256": "a6f8f7f9d59a27296faf02c87d9474694dec86f6fdd27c62f6c80805f5a0d5cf"
     },
     {
       "path": "manage.ps1",
@@ -112,7 +116,7 @@
     },
     {
       "path": "使用说明.md",
-      "sha256": "5418233dcb56298e36f143cb4e52e55e2c304c6cc7d82a10c97fb987e96408b7"
+      "sha256": "03ed9e8082ddf315b16f5ef7d934156fa852b752544b5a629990a77c32848e05"
     },
     {
       "path": "记忆升级说明.md",
@@ -120,7 +124,7 @@
     },
     {
       "path": "NOTICE.md",
-      "sha256": "4484d5bb1ad3d452384b1149ac0b77e0ffcb5a7d4fc56ebefcf0973cf4b6b1b5"
+      "sha256": "ab7ace39b27275a9479938cea34b0db67c6a93a302b0408d8c67c171c5022c86"
     },
     {
       "path": "LICENSE",
@@ -136,7 +140,7 @@
     },
     {
       "path": "test_memory_v2.py",
-      "sha256": "a987d352bf81ea1ab9cc27ba7ec6ee3236a53df8b9dafbb05133dc0ea3aaa340"
+      "sha256": "f8274f9cd0cf756b65e723bd664e930eb5b53a6308f085cb55c4b8bbaa198ed8"
     },
     {
       "path": "test_uninstall.ps1",
@@ -147,16 +151,40 @@
       "sha256": "b83346029631ec46818bf0b60c6d65472eebf71419fb299868eb9cae988fa831"
     },
     {
+      "path": "README.en.md",
+      "sha256": "02d61dfb21a355ce3679c3c8d0e1894152ba193c47813e99e6a2a86732e201d1"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "43742e57d366e896f73b4cf9cdadaf6514d2b4b9fd67e3798cdbefdc6e800e30"
+    },
+    {
+      "path": "test_web_search.py",
+      "sha256": "88a5b229568d33b337a1df127cb42ffa30e4246a00cff9366f93224de2c8be08"
+    },
+    {
+      "path": "test_multi_image.py",
+      "sha256": "8b41704f9bfba74882e1d8f26bbf3c2d4874fec57f8968e6a3fcf42720c6853d"
+    },
+    {
+      "path": "test_image_cache.py",
+      "sha256": "342bbbf0a4a29bfd097cd9baa3d7621100fc54b28bf7c5921a3b565e75200caa"
+    },
+    {
+      "path": "test_visual_recall.py",
+      "sha256": "41fdfe8cf4db1b9e112c426133c4becd79d34ca95d1873adcb238156e247b312"
+    },
+    {
       "path": "README.md",
-      "sha256": "73e1bb5a40444cc78c2b3d55f2c8deb2a6b078973200d4e63ee1d7b39fa92554"
+      "sha256": "caaebfac3e532c9394cd42c1c175402043276260fa33e9317376af036e658a3e"
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1ea4046d00843de3945b7c5178c635334ec35ed2497cba238835a958d8aac040"
+      "sha256": "a2f57baebaa19f79a3f028570f32a7c94c0de8fe9ef6b69bc6d8ae6e091c0e13"
     },
     {
       "path": "PRIVACY.md",
-      "sha256": "f9e191536cff65eec8cc2e3071b991bb2e578dff4011df790491f51edd7c6be2"
+      "sha256": "a4bd8f5880408a168fe162e02e7a0536d31fc6f3834f9e98d7ab6b6ae099bf45"
     },
     {
       "path": "SECURITY.md",
@@ -184,11 +212,11 @@
     },
     {
       "path": "tools/build_release.py",
-      "sha256": "86fa39ed9c2e1e85681349193d38ff3019588f64197b22e6c26042f19ea58148"
+      "sha256": "bca50d6ff49fdfff90be48d9dae747ad9024c1545b2f97759990531b55919b65"
     },
     {
       "path": "release-files.json",
-      "sha256": "1029d6f151da6e075b3a84d8379618d6065b989ed63e9ed4c28aac9d8cdd8a73"
+      "sha256": "f3e972cb4cd36279e8bdd599f3c8c0da78e4f5f36e41a4bcb8998dde998fcca2"
     }
   ]
 }

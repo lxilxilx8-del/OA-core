@@ -36,12 +36,13 @@ class DebouncedInbox:
     max_wait prevents an uninterrupted stream from deferring a turn forever.
     Pending input is memory-only, as in the original host.
     """
-    def __init__(self, handler, process_lock, on_error, debounce=1.8, max_wait=8.0):
+    def __init__(self, handler, process_lock, on_error, debounce=1.8, max_wait=8.0, image_debounce=4.0):
         self.handler = handler
         self.process_lock = process_lock
         self.on_error = on_error
         self.debounce = debounce
         self.max_wait = max_wait
+        self.image_debounce = image_debounce
         self.lock = threading.RLock()
         self.changed = threading.Condition(self.lock)
         self.states = {}
@@ -54,18 +55,24 @@ class DebouncedInbox:
                 raise RuntimeError('Inbox is closed')
             now = time.monotonic()
             key = (base_url, owner)
-            state = self.states.setdefault(key, {'texts': [], 'img': '', 'files': [],
+            state = self.states.setdefault(key, {'texts': [], 'img': '', 'images': [], 'files': [],
                                                  'errors': [], 'first': now, 'dedup_keys': []})
             if text:
                 state['texts'].append(text)
-            if image:
-                state['img'] = image
+            images = [image] if isinstance(image, (str, os.PathLike)) else (image or [])
+            for path in images:
+                if path:
+                    path = os.fspath(path)
+                    if path not in state['images']:
+                        state['images'].append(path)
+                    state['img'] = path  # Legacy single-image callers remain compatible.
             state['files'].extend(files or [])
             state['errors'].extend(errors or [])
             if dedup_key:
                 state['dedup_keys'].append(dedup_key)
             state['args'] = (base_url, token, owner, context)
-            state['due'] = min(now + self.debounce, state['first'] + self.max_wait)
+            settle = max(self.debounce, self.image_debounce) if state['images'] else self.debounce
+            state['due'] = min(now + settle, state['first'] + self.max_wait)
             if self.worker is None:
                 self.worker = threading.Thread(target=self._run, name='xiaoa-inbox', daemon=True)
                 self.worker.start()

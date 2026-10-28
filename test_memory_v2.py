@@ -258,12 +258,12 @@ class HostIntegrationTests(unittest.TestCase):
                      FIXED_BASE_URL='https://example.org',ensure_weixin_login=Mock(),log=Mock(),pause_remaining=lambda:0,
                      ilink_post=Mock(side_effect=[{},response,response,KeyboardInterrupt]),extract_msg_text=lambda _:'合成测试',
                      get_assistant_hub=lambda:hub,get_conversation_store=lambda:store,INBOUND_DEDUP=MessageDedup(),
-                     download_and_decrypt_wechat_image=Mock(return_value=''),receive_files=Mock(return_value=([],[])),
+                     download_and_decrypt_wechat_images=Mock(return_value=[]),receive_files=Mock(return_value=([],[])),
                      atomic_write_json=Mock(),enqueue_inbound_message=Mock())
             self.functions({'worker_loop'},env)
             with self.assertRaises(KeyboardInterrupt):env['worker_loop']()
             env['enqueue_inbound_message'].assert_called_once()
-            env['download_and_decrypt_wechat_image'].assert_called_once()
+            env['download_and_decrypt_wechat_images'].assert_called_once()
             hub.note_interaction.assert_called_once()
 
     def test_foreign_owner_is_blocked_for_ordinary_chat(self):

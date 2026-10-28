@@ -7,7 +7,7 @@ import re
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-VERSION='1.1.0'
+VERSION='1.2.0'
 FORBIDDEN_NAMES={'clawbot_account.json','clawbot_state.json','chat_history.json','user_memory.json',
                  'persona.txt','search_cache.json','deployment.json','.xiaoa-install.json','wechat_login_qr.png'}
 FORBIDDEN_PARTS={'data','assistant_data','runtime','setup-cache','__pycache__','.git','个人资料库'}

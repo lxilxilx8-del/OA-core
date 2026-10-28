@@ -1,3 +1,11 @@
+# 1.2.0 ? 2026-10-28
+
+- Preserve all images in a merged turn and avoid per-image model calls.
+- Retain local image originals for eight days and preserve labeled text summaries.
+- Recall older visual summaries without promoting ordinary assistant claims to user facts.
+- Parameterize image debounce and align public/runtime module boundaries.
+- Add an English manual and architecture guide; retain explicit account-risk notices.
+
 # 更新记录
 
 ## 1.1.0 — 2026-10-28（预览）
