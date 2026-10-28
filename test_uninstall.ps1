@@ -58,7 +58,7 @@ function New-Fixture([string]$Name) {
 }
 function New-TestShortcut([string]$Root,[switch]$OtherApp) {
     $shell=New-Object -ComObject WScript.Shell
-    $path=Join-Path $script:FakeDesktop '小A（内核版）.lnk'
+    $path=Join-Path $script:FakeDesktop 'XiaoA Core.lnk'
     $shortcut=$shell.CreateShortcut($path)
     $shortcut.TargetPath=if ($OtherApp) { Join-Path $env:WINDIR 'System32\notepad.exe' } else { Join-Path $env:WINDIR 'System32\wscript.exe' }
     $shortcut.Arguments='"'+(Join-Path $Root 'start.vbs')+'"'

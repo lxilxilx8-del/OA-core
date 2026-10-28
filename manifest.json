@@ -76,7 +76,7 @@
     },
     {
       "path": "install.ps1",
-      "sha256": "b7778cd2a7b9dd66ef1b8c01a3414368021b2a5f9b8bb20146716626a4d14253"
+      "sha256": "1649d5a649e46aa8bdcbd2e8724f96133cc5fb190caceecd3178aa50b97bf2ab"
     },
     {
       "path": "manage.ps1",
@@ -84,7 +84,7 @@
     },
     {
       "path": "uninstall.ps1",
-      "sha256": "620cd16b07718dc5a17889b36744df61e93b6b7ac393e6c9a2fd0c4cd123cc0b"
+      "sha256": "0790d7f82960909612dfe7ed532bcc0df67b86c9085689e9e3da3b0d1e466839"
     },
     {
       "path": "start.vbs",
@@ -112,7 +112,7 @@
     },
     {
       "path": "使用说明.md",
-      "sha256": "53c0653734ca482b7033ac63213be429e477d79592f03c1b20278b607fc58ef9"
+      "sha256": "5418233dcb56298e36f143cb4e52e55e2c304c6cc7d82a10c97fb987e96408b7"
     },
     {
       "path": "记忆升级说明.md",
@@ -140,7 +140,7 @@
     },
     {
       "path": "test_uninstall.ps1",
-      "sha256": "a97a45357f6ccdba0bd870c5d7a1d8e461b0caa78b1b7653dd7d245573c26aea"
+      "sha256": "0826f16faf5ee2f9282d4604de57840470b3b01896a7f373b57ffd200fdd7bf8"
     },
     {
       "path": "test_packaging.py",
@@ -148,7 +148,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "353f1f2c52ebb4d53c9b77a4ab33bcea59052225f5e9c1b3dff0d3d58a7ae306"
+      "sha256": "73e1bb5a40444cc78c2b3d55f2c8deb2a6b078973200d4e63ee1d7b39fa92554"
     },
     {
       "path": "CHANGELOG.md",

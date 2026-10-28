@@ -133,7 +133,7 @@ try {
 
     Write-Host '[5/5] 创建快捷方式并启动…'
     $shell = New-Object -ComObject WScript.Shell
-    $shortcut = $shell.CreateShortcut((Join-Path ([Environment]::GetFolderPath('Desktop')) '小A（内核版）.lnk'))
+    $shortcut = $shell.CreateShortcut((Join-Path ([Environment]::GetFolderPath('Desktop')) 'XiaoA Core.lnk'))
     $shortcut.TargetPath = Join-Path $env:WINDIR 'System32\wscript.exe'
     $shortcut.Arguments = '"' + (Join-Path $appRoot 'start.vbs') + '"'
     $shortcut.WorkingDirectory = $appRoot
@@ -149,7 +149,7 @@ try {
     New-ItemProperty -LiteralPath $uninstallKey -Name 'NoModify' -Value 1 -PropertyType DWord -Force | Out-Null
     New-ItemProperty -LiteralPath $uninstallKey -Name 'NoRepair' -Value 1 -PropertyType DWord -Force | Out-Null
     & (Join-Path $appRoot 'manage.ps1') -Action Start
-    Write-Host '安装完成。以后双击桌面“小A（内核版）”即可启动。主动聊天默认关闭。' -ForegroundColor Green
+    Write-Host '安装完成。以后双击桌面“XiaoA Core”即可启动。主动聊天默认关闭。' -ForegroundColor Green
     exit 0
 } catch {
     Write-Host ('安装未完成：' + $_.Exception.Message) -ForegroundColor Red

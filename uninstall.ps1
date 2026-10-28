@@ -73,14 +73,18 @@ function Stop-XiaoAOwnedProcessTree([string]$Root) {
 
 function Remove-XiaoAShortcut([string]$Root) {
     $desktop = Get-XiaoADesktop
-    $shortcutPath = Join-Path $desktop '小A（内核版）.lnk'
-    if (Test-Path -LiteralPath $shortcutPath -PathType Leaf) {
-        $shell = New-Object -ComObject WScript.Shell
-        $shortcut = $shell.CreateShortcut($shortcutPath)
-        $expected = '"' + (Join-Path $Root 'start.vbs') + '"'
-        if ($shortcut.Arguments -eq $expected -and
-            [IO.Path]::GetFileName($shortcut.TargetPath) -ieq 'wscript.exe') {
-            Remove-Item -LiteralPath $shortcutPath -Force
+    # ASCII filename works with the legacy WSH shortcut API on English Windows.
+    # Also recognize older releases, retaining the same target ownership check.
+    foreach ($name in @('XiaoA Core.lnk','小A（内核版）.lnk')) {
+        $shortcutPath = Join-Path $desktop $name
+        if (Test-Path -LiteralPath $shortcutPath -PathType Leaf) {
+            $shell = New-Object -ComObject WScript.Shell
+            $shortcut = $shell.CreateShortcut($shortcutPath)
+            $expected = '"' + (Join-Path $Root 'start.vbs') + '"'
+            if ($shortcut.Arguments -eq $expected -and
+                [IO.Path]::GetFileName($shortcut.TargetPath) -ieq 'wscript.exe') {
+                Remove-Item -LiteralPath $shortcutPath -Force
+            }
         }
     }
 }
