@@ -28,19 +28,19 @@
     },
     {
       "path": "app/web_search.py",
-      "sha256": "bef59a1ed1e7402d8a47de051702b344bd7009aff08a3a62b9cc5529b164f290"
+      "sha256": "c5158ace84fb51b409369ec6f72bbffc8a48064cfd00fa7a75497577fc5fa99e"
     },
     {
       "path": "app/conversation_engine.py",
-      "sha256": "d80a63324ab08c5aaf19e20e67a0375e9709fad6066bbd31c95b81946bcc35bc"
+      "sha256": "6376a1755bdf1968ef9b9ada5bd7b728275ec130589ced56c8f730235fc136a2"
     },
     {
       "path": "app/clawbot_plugins.py",
-      "sha256": "f80563507556e301eb4c729947dca79594a3b3ee70dd049dc75164b39f000735"
+      "sha256": "ff5ee2d07996ce4c74fb25b78f7cf30d8c9c86de681c5ae19f6294095ee7ca5c"
     },
     {
       "path": "app/clawbot_service.py",
-      "sha256": "516b691caf633f55a192299485cc6f05bae60a47e1cb027d06dd08096e8516a2"
+      "sha256": "0fd524c28d7add12d4e71784544a5e8b0e9602c15bf7d54ac894ac3a421eff0d"
     },
     {
       "path": "app/conversation_store.py",
@@ -52,7 +52,11 @@
     },
     {
       "path": "app/image_cache.py",
-      "sha256": "25fb07640a548b39ace95c3fc434bea4c978e8903ae1a12a716ee726fe40faf8"
+      "sha256": "bbc39c15633ad0477a19ad9fc1bbbcc6b249b5f1a6031443a9fd457bd63747cb"
+    },
+    {
+      "path": "app/storage_layout.py",
+      "sha256": "2d29615d68e6688d47a8cc2ac61c6514f58d822950561b41487690814cf66668"
     },
     {
       "path": "app/THIRD_PARTY_WECHATBRIDGE_LICENSE.txt",
@@ -84,7 +88,7 @@
     },
     {
       "path": "manage.ps1",
-      "sha256": "2cd49ad4075ed83d114cfe38a1548c82b586ac7abdf3b377fc8c81ea0d722ed9"
+      "sha256": "6c1e1a72338693eb2b257ff599966f3ce9403672c5de07fb583a74a10ecd92cb"
     },
     {
       "path": "uninstall.ps1",
@@ -120,7 +124,7 @@
     },
     {
       "path": "记忆升级说明.md",
-      "sha256": "375c4b19779087fb261e8ebfac62afae22a3190d76e71501496cd77d34a8ea76"
+      "sha256": "89e1c61e219d2e3faf1bb6098309113b531bc50fc9bcd5aa829ce9ac0d310ff9"
     },
     {
       "path": "NOTICE.md",
@@ -132,7 +136,7 @@
     },
     {
       "path": "test_release_core.py",
-      "sha256": "1dcb332e29a30ae9c1b086e59888b331b2045a1af41e8856cc16cdea9d1c9284"
+      "sha256": "ee695f6eaf55718659b28731b3e2892de44155b3ac5de7f357c8444ba8460669"
     },
     {
       "path": "test_core_runtime.py",
@@ -152,7 +156,7 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "02d61dfb21a355ce3679c3c8d0e1894152ba193c47813e99e6a2a86732e201d1"
+      "sha256": "66ee8286a3e0d6790090641d7133fa5c0fd8f890d16ca0643c3a42bc5d178ffb"
     },
     {
       "path": "ARCHITECTURE.md",
@@ -164,11 +168,15 @@
     },
     {
       "path": "test_multi_image.py",
-      "sha256": "8b41704f9bfba74882e1d8f26bbf3c2d4874fec57f8968e6a3fcf42720c6853d"
+      "sha256": "67301a1acd4ea8f9cbf9a505b75077882e3e12415169992e1af07e814fc65d2d"
     },
     {
       "path": "test_image_cache.py",
       "sha256": "342bbbf0a4a29bfd097cd9baa3d7621100fc54b28bf7c5921a3b565e75200caa"
+    },
+    {
+      "path": "test_storage_layout.py",
+      "sha256": "188d06c93cac544d0835a3c3cf8088404111cbec87ee99ca0547855279401230"
     },
     {
       "path": "test_visual_recall.py",
@@ -184,7 +192,7 @@
     },
     {
       "path": "PRIVACY.md",
-      "sha256": "a4bd8f5880408a168fe162e02e7a0536d31fc6f3834f9e98d7ab6b6ae099bf45"
+      "sha256": "62ccf57ce0a6ea2ad1d0a442f86f16a46186fb6acc6242448b384322c2f27f12"
     },
     {
       "path": "SECURITY.md",
@@ -200,7 +208,7 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "62ad59592e15439009936b98dc2de5c53d3e4d324bbe47814a61ab85a8ccb655"
+      "sha256": "5e53657a52132745e65a3422b00aa4fd55e161efc272bca57f2c08e008456d6f"
     },
     {
       "path": ".gitattributes",
@@ -216,7 +224,7 @@
     },
     {
       "path": "release-files.json",
-      "sha256": "f3e972cb4cd36279e8bdd599f3c8c0da78e4f5f36e41a4bcb8998dde998fcca2"
+      "sha256": "6fd751d359655a3e2671baf226f13067f061a913ec1f536ea54f3d5c0b98d81f"
     }
   ]
 }

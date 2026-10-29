@@ -105,7 +105,8 @@ def download_and_decrypt_wechat_image(m: dict) -> str:
                     suffix = '.gif'
                 else:
                     suffix = '.jpg'
-                out_path = os.path.join(BASE_DIR, f"wechat_inbound_{uuid.uuid4().hex}{suffix}")
+                from image_cache import inbound_image_directory
+                out_path = os.path.join(inbound_image_directory(BASE_DIR, create=True), f"wechat_inbound_{uuid.uuid4().hex}{suffix}")
                 with open(out_path, "wb") as f:
                     f.write(raw_bytes)
                 return out_path

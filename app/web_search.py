@@ -19,7 +19,8 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 BASE_DIR = Path(__file__).resolve().parent
-CACHE_PATH = Path(os.environ.get("XIAOA_DATA_DIR", str(BASE_DIR))) / "search_cache.json"
+CACHE_PATH = Path(os.environ.get("XIAOA_DATA_DIR", str(BASE_DIR))) / "cache" / "search_cache.json"
+CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
 BEIJING = timezone(timedelta(hours=8))
 MAX_RESULTS = 4
 SEARCH_DEADLINE = 14

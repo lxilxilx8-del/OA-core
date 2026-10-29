@@ -47,6 +47,19 @@ def parse_image_notes(text, image_count):
     return cleaned.strip(), lines
 
 
+def inbound_image_directory(directory, *, create=False):
+    """Use a fixed direct-child folder and reject links or Windows junctions."""
+    root = Path(directory).resolve()
+    folder = root / 'inbound_images'
+    if create:
+        folder.mkdir(exist_ok=True)
+    if folder.exists():
+        info = folder.lstat()
+        if folder.is_symlink() or getattr(info, 'st_file_attributes', 0) & 0x400 or not folder.is_dir() or folder.resolve().parent != root:
+            raise ValueError('Unsafe image directory')
+    return folder
+
+
 def cleanup_image_cache(directory, *, now=None, retention_seconds=IMAGE_RETENTION_SECONDS, protected=()):
     """Delete only expired direct-child downloads; do not traverse folders or links."""
     root = Path(directory).resolve()
@@ -54,18 +67,23 @@ def cleanup_image_cache(directory, *, now=None, retention_seconds=IMAGE_RETENTIO
     protected_paths = {Path(p).resolve() for p in protected}
     report = {'deleted': 0, 'failed': 0, 'kept': 0}
     pattern = re.compile(r'^wechat_inbound_(?:[0-9a-f]{32}|[0-9]{10,20})\.(?:png|jpe?g|webp|gif)$', re.I)
-    for path in root.iterdir():
-        if not pattern.fullmatch(path.name) or not path.is_file() or path.is_symlink():
-            continue
-        try:
-            info = path.stat()
-            if getattr(info, 'st_file_attributes', 0) & 0x400:  # Windows reparse point
-                continue
-            if path.resolve().parent != root or path.resolve() in protected_paths or current - info.st_mtime < retention_seconds:
-                report['kept'] += 1
-                continue
-            path.unlink()
-            report['deleted'] += 1
-        except OSError:
-            report['failed'] += 1
+    folder = inbound_image_directory(root)
+    directories = [root]
+    if folder.is_dir():
+        directories.append(folder)
+    for current_directory in directories:
+      for path in current_directory.iterdir():
+          if not pattern.fullmatch(path.name) or not path.is_file() or path.is_symlink():
+              continue
+          try:
+              info = path.stat()
+              if getattr(info, 'st_file_attributes', 0) & 0x400:  # Windows reparse point
+                  continue
+              if path.resolve().parent != current_directory or path.resolve() in protected_paths or current - info.st_mtime < retention_seconds:
+                  report['kept'] += 1
+                  continue
+              path.unlink()
+              report['deleted'] += 1
+          except OSError:
+              report['failed'] += 1
     return report

@@ -29,4 +29,4 @@ if (-not (Test-Path -LiteralPath $python) -or -not (Test-Path -LiteralPath (Join
 New-Item -ItemType Directory -Path $data -Force | Out-Null
 $process = Start-Process -FilePath $python -ArgumentList ('"' + $service + '"') -WorkingDirectory $data -WindowStyle Hidden -PassThru
 Start-Sleep -Seconds 2
-if ($process.HasExited) { throw '小A启动失败，请查看数据目录里的 clawbot_service.log。' }
+if ($process.HasExited) { throw '小A启动失败，请查看数据目录 logs 文件夹里的 clawbot_service.log。' }

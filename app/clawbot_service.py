@@ -18,6 +18,8 @@ from datetime import datetime, timedelta, timezone
 APP_DIR = Path(__file__).resolve().parent
 BASE_DIR = os.environ.get('XIAOA_DATA_DIR') or str(Path(os.environ.get('LOCALAPPDATA', Path.home()))/'XiaoACore'/'data')
 os.environ['XIAOA_DATA_DIR'] = BASE_DIR
+from storage_layout import prepare_storage
+prepare_storage(BASE_DIR)
 from Crypto.Cipher import AES
 from core_runtime import DebouncedInbox, ModelCallError, atomic_write_json, atomic_write_text
 from conversation_store import ConversationStore
@@ -42,10 +44,10 @@ CONVERSATION_STORE_IDENTITY = None
 INBOUND_DEDUP = MessageDedup()
 ACCOUNT_PATH = os.path.join(BASE_DIR,'clawbot_account.json')
 STATE_PATH = os.path.join(BASE_DIR,'clawbot_state.json')
-HISTORY_PATH = os.path.join(BASE_DIR,'chat_history.json')
-MEMORY_PATH = os.path.join(BASE_DIR,'user_memory.json')
+HISTORY_PATH = os.path.join(BASE_DIR,'assistant_data','memory','chat_history.json')
+MEMORY_PATH = os.path.join(BASE_DIR,'assistant_data','memory','user_memory.json')
 PERSONA_PATH = os.path.join(BASE_DIR,'persona.txt')
-LOG_PATH = os.path.join(BASE_DIR,'clawbot_service.log')
+LOG_PATH = os.path.join(BASE_DIR,'logs','clawbot_service.log')
 FIXED_BASE_URL = 'https://ilinkai.weixin.qq.com'
 CDN_BASE_URL = 'https://novac2c.cdn.weixin.qq.com/c2c'
 CLIENT_VERSION = '132106'
@@ -115,7 +117,7 @@ def get_conversation_store():
     identity=(BASE_DIR,owner)
     with CONVERSATION_STORE_LOCK:
         if CONVERSATION_STORE is None or CONVERSATION_STORE_IDENTITY!=identity:
-            candidate=ConversationStore(Path(BASE_DIR)/'assistant_data')
+            candidate=ConversationStore(Path(BASE_DIR)/'assistant_data'/'memory')
             candidate.migrate_legacy(owner,HISTORY_PATH,MEMORY_PATH)
             CONVERSATION_STORE=candidate
             CONVERSATION_STORE_IDENTITY=identity
@@ -848,7 +850,7 @@ def setup_tray_icon():
             img = Image.new("RGBA", (64, 64), (66, 133, 244, 255))
 
         def on_open_log(icon, item):
-            log_file = os.path.join(BASE_DIR, "clawbot_service.log")
+            log_file = LOG_PATH
             if os.path.exists(log_file):
                 os.startfile(log_file)
 

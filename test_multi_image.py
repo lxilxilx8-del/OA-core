@@ -49,6 +49,7 @@ class MultiImageTests(unittest.TestCase):
             errors = []
             paths = plugins.download_and_decrypt_wechat_images({'item_list': messages}, errors=errors)
             self.assertEqual([Path(p).read_bytes() for p in paths], originals)
+            self.assertTrue(all(Path(p).parent == Path(directory) / 'inbound_images' for p in paths))
             self.assertEqual(len(set(paths)), 3)
             self.assertEqual(network.call_count, 3)
             self.assertEqual(errors, [])

@@ -63,7 +63,7 @@ The distribution contains source, tests, scripts, and documentation. It excludes
 
 Local storage does **not** mean fully offline operation: selected prompts, conversation context, memories, and images are sent to the external model; WeChat carries messages; search providers receive search terms. Third-party retention rules are independent of the local eight-day image policy.
 
-Image cleanup only targets generated, expired inbound cache files directly inside the data directory. It does not recursively delete backups, document-library files, or arbitrary user photos. Text descriptions and chat archives remain. Forgetting a memory is not secure erasure of the database or old backups. AGY manages its own credentials and session data outside this project's image cache.
+Incoming images are stored in `data/inbound_images`; logs are in `data/logs`, search cache in `data/cache`, and chat and memory data in `data/assistant_data/memory`. Cleanup targets expired generated images there and legacy images directly in the data directory. It does not recursively delete backups, document-library files, or arbitrary user photos. When upgrading, the previous memory database and legacy files are retained as recovery copies; remove them manually if no longer needed. Text descriptions and chat archives remain. Forgetting a memory is not secure erasure of the database or old backups. AGY manages its own credentials and session data outside this project's image cache.
 
 The repository's Git commit identity follows the publisher's GitHub account settings. File-content sanitization does not hide commit author emails. See [PRIVACY.md](PRIVACY.md) for the Chinese data policy.
 

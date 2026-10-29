@@ -7,7 +7,7 @@
 | 内容 | 位置/处理 |
 |---|---|
 | 微信绑定凭据与会话状态 | `%LOCALAPPDATA%\XiaoACore\data` |
-| 普通聊天与个人记忆 | `data/assistant_data/conversation.sqlite3` |
+| 普通聊天与个人记忆 | `data/assistant_data/memory/conversation.sqlite3` |
 | 资料库、文件助手与主动聊天状态 | `data/` 中的相应目录和数据库 |
 | AGY 登录与模型会话 | 由官方 AGY 在安装者自己的凭据与运行环境中管理，本包不附带 |
 

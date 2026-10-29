@@ -55,8 +55,8 @@ class CleanReleaseTests(unittest.TestCase):
         self.assertEqual(result.returncode,0,result.stderr)
         self.assertIn('no login, model call or message sent',result.stdout)
         created=list((self.root/'fresh-data').iterdir())
-        self.assertEqual([p.name for p in created],['persona.txt'])
-        self.assertEqual(created[0].read_text(encoding='utf-8'),service.DEFAULT_PERSONA)
+        self.assertEqual(sorted(p.name for p in created), ['assistant_data', 'cache', 'inbound_images', 'logs', 'persona.txt'])
+        self.assertEqual((self.root/'fresh-data'/'persona.txt').read_text(encoding='utf-8'),service.DEFAULT_PERSONA)
 
     def test_plain_chat_is_one_call_and_history_contains_only_reply(self):
         calls=self.chat(['在呢。'])
